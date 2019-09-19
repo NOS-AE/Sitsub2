@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">@color/clTheme3</color>
+    <color name="colorPrimaryDark">@color/clTheme1</color>
+    <color name="colorAccent">@color/clTheme4</color>
+
+
+    <color name="clTheme1">#222831</color>
+    <color name="clTheme2">#393e46</color>
+    <color name="clTheme3">#00adb5</color>
+    <color name="clTheme4">#eeeeee</color>
+
+    <color name="lightWhite">#EEEEEE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="lightBlack">#212121</color>
+    <color name="hint">#757575</color>
+    <color name="black">#000000</color>
+</resources>

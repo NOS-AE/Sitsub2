@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="clTurquoiseTheme1">#222831</color>
+    <color name="clTurquoiseTheme2">#393e46</color>
+    <color name="clTurquoiseTheme3">#00adb5</color>
+    <color name="clTurquoiseTheme4">#eeeeee</color>
+    <color name="clTurquoiseTextPrimary">@color/lightBlack</color>
+    <color name="clTurquoiseTextSecondary">@color/hint</color>
+    <color name="clTurquoiseCardBg">@color/white</color>
+
+    <style name="ThemeDarkTurquoiseGrey" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/clTurquoiseTheme1</item>
+        <item name="colorPrimary">@color/clTurquoiseTheme2</item>
+        <item name="colorAccent">@color/clTurquoiseTheme3</item>
+        <item name="android:windowBackground">@color/clTurquoiseTheme4</item>
+        <item name="android:textColorPrimary">@color/clTurquoiseTextPrimary</item>
+        <item name="android:textColorSecondary">@color/clTurquoiseTextSecondary</item>
+        <item name="cardBg">@color/clTurquoiseCardBg</item>
+    </style>
+
+</resources>
