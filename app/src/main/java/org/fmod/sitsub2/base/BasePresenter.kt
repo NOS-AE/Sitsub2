@@ -1,4 +1,5 @@
 package org.fmod.sitsub2.base
 
-interface BasePresenter {
+abstract class BasePresenter<T: BaseContract.View>: BaseContract.Presenter {
+    protected lateinit var mView: T
 }

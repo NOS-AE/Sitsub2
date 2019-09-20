@@ -1,13 +1,12 @@
 package org.fmod.sitsub2.ui.login
 
-import org.fmod.sitsub2.base.BasePresenter
-import org.fmod.sitsub2.base.BaseView
+import org.fmod.sitsub2.base.BaseContract
 
 interface LoginContract {
-    interface Presenter: BasePresenter {
-
+    interface Presenter: BaseContract.Presenter {
+        fun tryLogin(id: String, pw: String)
     }
-    interface View: BaseView<Presenter> {
-
+    interface View: BaseContract.View {
+        fun loginSuccess()
     }
 }

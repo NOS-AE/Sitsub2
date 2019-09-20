@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.fmod.sitsub2.base.BaseActivity
 
-class MainActivity : BaseActivity() {
+class MainActivity : AppCompatActivity() {
 
-    override fun getLayoutId() = R.layout.activity_main
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+
+    /*override fun getLayoutId() = R.layout.activity_main
 
     override fun initViews() {
 
@@ -16,5 +21,5 @@ class MainActivity : BaseActivity() {
 
     override fun setListeners() {
 
-    }
+    }*/
 }

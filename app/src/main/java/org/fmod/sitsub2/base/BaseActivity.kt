@@ -6,7 +6,10 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import org.fmod.sitsub2.util.ThemeUtil
 
-abstract class BaseActivity: AppCompatActivity() {
+abstract class BaseActivity<T: BaseContract.Presenter>: AppCompatActivity() {
+
+    protected lateinit var mPresenter: T
+
     /**
      * 设置布局
      *
@@ -15,13 +18,26 @@ abstract class BaseActivity: AppCompatActivity() {
     @LayoutRes
     abstract fun getLayoutId(): Int
 
+    /**
+     * 控件监听
+     */
     abstract fun setListeners()
 
+    /**
+     * 控件初始化
+     */
     abstract fun initViews()
+
+    /**
+     * 从Activity引入presenter
+     */
+    abstract fun injectPresenter(): T
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ThemeUtil.setTheme(this)
+        mPresenter = injectPresenter()
         //设置布局
         setContentView(getLayoutId())
         //初始化控件样式
