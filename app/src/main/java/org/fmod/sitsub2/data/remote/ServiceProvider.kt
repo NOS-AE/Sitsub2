@@ -1,10 +1,11 @@
 package org.fmod.sitsub2.data.remote
 
+import org.fmod.sitsub2.data.remote.service.LoginService
 import retrofit2.Retrofit
 
 object ServiceProvider {
 
-    private val retrofits = HashMap<String, Retrofit>()
-
-    //fun getLoginService() =
+    fun getLoginService(token: String) = RetrofitProvider
+        .getRetrofit(GITHUB_API_BASE_URL, token)
+        .create(LoginService::class.java)
 }
