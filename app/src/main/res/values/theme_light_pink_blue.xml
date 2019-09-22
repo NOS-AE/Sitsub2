@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lpb1">#ffb6b9</color>
+    <color name="lpb2">#fae3d9</color>
+    <color name="lpb3">#bbded6</color>
+    <color name="lpb4">#8ac6d1</color>
+    <color name="lpbTextPrimary">@color/lightBlack</color>
+    <color name="lpbTextSecondary">#9E9E9E</color>
+    <color name="lpbCardBg">@color/lpb1</color>
+
+    <style name="ThemeDarkPinkSkin" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/lpb4</item>
+        <item name="colorPrimary">@color/lpb3</item>
+        <item name="colorAccent">@color/lpb1</item>
+        <item name="android:windowBackground">@color/lpb2</item>
+        <item name="android:textColorPrimary">@color/lpbTextPrimary</item>
+        <item name="android:textColorSecondary">@color/lpbTextSecondary</item>
+        <item name="cardBg">@color/lpbCardBg</item>
+    </style>
+</resources>

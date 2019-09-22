@@ -1,15 +1,23 @@
 package org.fmod.sitsub2.ui.login
 
 import android.annotation.SuppressLint
+import android.view.View
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import com.jakewharton.rxbinding3.view.clicks
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.fmod.sitsub2.R
 import org.fmod.sitsub2.base.BaseActivity
 import org.fmod.sitsub2.util.toast
 import org.fmod.sitsub2.util.transparentFullScreen
 import java.util.concurrent.TimeUnit
 
-class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
+class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.View {
 
     private lateinit var id: String
     private lateinit var pw: String
@@ -20,6 +28,8 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
 
 
     override fun loginSuccess() {
+        login_login.visibility = View.VISIBLE
+        login_progressbar.visibility = View.GONE
         toast("登录成功")
     }
 
@@ -30,6 +40,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
         transparentFullScreen()
     }
 
+
     @SuppressLint("CheckResult")
     override fun setListeners() {
 
@@ -39,7 +50,14 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginContract.View {
                 loginCheck()
             }
             .subscribe {
+                login_login.visibility = View.INVISIBLE
+                login_progressbar.visibility = View.VISIBLE
                 mPresenter.tryLogin(id, pw)
+                /*GlobalScope.launch(Dispatchers.Main) {
+                    delay(5000)
+                    mPresenter.tryLogin(id, pw)
+                }*/
+
             }
     }
 

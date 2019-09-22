@@ -1,6 +1,7 @@
 package org.fmod.sitsub2.ui.login
 
 import org.fmod.sitsub2.base.BasePresenter
+import org.fmod.sitsub2.data.remote.RemoteHelper
 
 
 class LoginPresenter(view: LoginContract.View): BasePresenter<LoginContract.View>(), LoginContract.Presenter {
@@ -10,6 +11,11 @@ class LoginPresenter(view: LoginContract.View): BasePresenter<LoginContract.View
     }
 
     override fun tryLogin(id: String, pw: String) {
-        mView.loginSuccess()
+        launch(tryBlock = {
+            RemoteHelper.login(id, pw)
+        }, catchBlock = {
+
+        })
+
     }
 }
