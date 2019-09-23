@@ -1,6 +1,8 @@
 package org.fmod.sitsub2.data.remote.service
 
-import org.fmod.sitsub2.data.remote.model.AuthRequestModel
+import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
+import org.fmod.sitsub2.data.remote.model.send.AuthRequestModel
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -11,9 +13,9 @@ interface LoginService {
     @POST("authorizations")
     //@Headers("Accept: application/vnd.github.v3+json")
     @Headers("Accept: application/json")
-    fun authorizations(
+    suspend fun authorizations(
         @Body authRequestModel: AuthRequestModel
-    )
+    ): Response<BasicResponse>
 
     @POST("login/oauth/access_token")
     @Headers("Accept: application/json")
@@ -23,4 +25,6 @@ interface LoginService {
         @Query("code") code: String,
         @Query("state") state: String
     )
+
+
 }
