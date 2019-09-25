@@ -19,17 +19,17 @@ fun toastSuccess(msg: String) = Toasty.success(MyApp.instance, msg).show()
 
 fun toastWarning(msg: String) = Toasty.warning(MyApp.instance, msg).show()
 
-fun Any.log(msg: String) {
+fun Any.log(msg: String?) {
     if(isDebug)
         Log.d("$APP_TAG-${javaClass.simpleName}", msg)
 }
 
-fun Any.remoteLog(msg: String) {
+fun Any.remoteLog(msg: String?) {
     if(isDebug)
         Log.d("$REMOTE_TAG-${javaClass.simpleName}", msg)
 }
 
-fun Any.localLog(msg: String) {
+fun Any.localLog(msg: String?) {
     if(isDebug)
         Log.d("$LOCAL_TAG-${javaClass.simpleName}", msg)
 }

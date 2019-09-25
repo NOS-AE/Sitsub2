@@ -2,6 +2,7 @@ package org.fmod.sitsub2.ui.login
 
 import android.annotation.SuppressLint
 import android.view.View
+import androidx.lifecycle.ViewModel
 import com.jakewharton.rxbinding3.view.clicks
 import kotlinx.android.synthetic.main.activity_login.*
 import org.fmod.sitsub2.R
@@ -31,6 +32,7 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
     override fun getBasicResponseSuccess(basicResponse: BasicResponse) {
         toastInfo("认证成功")
         mPresenter.getUserInfo(basicResponse)
+        
     }
 
     override fun getLayoutId() = R.layout.activity_login

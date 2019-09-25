@@ -7,10 +7,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.build-properties'
 
 buildProperties {
-   getPublic{
+    getPublic {
         file rootProject.file('public.properties')
     }
-    getLocal{
+    getLocal {
         file rootProject.file('local.properties')
     }
 }
@@ -43,7 +43,7 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-    kotlinOptions{
+    kotlinOptions {
         jvmTarget = "1.8"
     }
 }
