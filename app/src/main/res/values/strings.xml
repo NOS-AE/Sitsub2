@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Sitsub2</string>
+
+    <string-array name="user_list">
+        <item>NOS-AE</item>
+        <item>2475945868@qq.com</item>
+    </string-array>
 </resources>

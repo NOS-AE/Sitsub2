@@ -7,6 +7,5 @@ interface MainContract {
 
     }
     interface Presenter: BaseContract.Presenter {
-
     }
 }

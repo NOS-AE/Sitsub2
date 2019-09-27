@@ -17,6 +17,7 @@
         <item name="android:textColorPrimary">@color/dtgTextPrimary</item>
         <item name="android:textColorSecondary">@color/dtgTextSecondary</item>
         <item name="cardBg">@color/dtgCardBg</item>
+
     </style>
 
 </resources>

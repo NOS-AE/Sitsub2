@@ -16,5 +16,7 @@
         <item name="android:textColorPrimary">@color/lpbTextPrimary</item>
         <item name="android:textColorSecondary">@color/lpbTextSecondary</item>
         <item name="cardBg">@color/lpbCardBg</item>
+        <item name="android:colorControlActivated">@color/colorAccent</item>
+        <item name="android:colorControlHighlight">@color/colorAccent</item>
     </style>
 </resources>
