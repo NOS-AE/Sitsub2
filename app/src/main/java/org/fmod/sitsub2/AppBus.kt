@@ -19,22 +19,22 @@ object AppBus {
         HashMap<Class<*>, MyLiveData<Any>>()
     }
 
-    //TODO observer泛型
-
-    inline fun <reified T>subscribe(owner: LifecycleOwner, observer: Observer<in Any>) {
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T>subscribe(owner: LifecycleOwner, observer: Observer<in T>) {
         val eventType = T::class.java
         if(!bus.containsKey(eventType)){
             bus[eventType] = MyLiveData()
         }
-        bus[eventType]?.subscribe(owner, observer)
+        (bus[eventType] as MyLiveData<T>?)?.subscribe(owner, observer)
     }
 
-    inline fun <reified T>subscribeSticky(owner: LifecycleOwner, observer: Observer<in Any>) {
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T>subscribeSticky(owner: LifecycleOwner, observer: Observer<in T>) {
         val eventType = T::class.java
         if(!bus.containsKey(eventType)){
             bus[eventType] = MyLiveData()
         }
-        bus[eventType]?.subscribeSticky(owner, observer)
+        (bus[eventType] as MyLiveData<T>?)?.subscribeSticky(owner, observer)
     }
 
     inline fun <reified T>post(message: T) {

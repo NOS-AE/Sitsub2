@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AppBus2 {
+public final class AppBus2 {
 
     private final Map<String, BusMutableLiveData<Object>> bus;
 
@@ -28,16 +28,16 @@ public class AppBus2 {
         return SingletonHolder.DEFAULT_BUS;
     }
 
-    public <T> MutableLiveData<T> with(String key, Class<T> type) {
+    public <T> MutableLiveData<T> with(String key) {
         if (!bus.containsKey(key)) {
             bus.put(key, new BusMutableLiveData<>());
         }
         return (MutableLiveData<T>) bus.get(key);
     }
 
-    public MutableLiveData<Object> with(String key) {
+    /*public MutableLiveData<Object> with(String key) {
         return with(key, Object.class);
-    }
+    }*/
 
     private static class ObserverWrapper<T> implements Observer<T> {
 
@@ -74,16 +74,6 @@ public class AppBus2 {
     private static class BusMutableLiveData<T> extends MutableLiveData<T> {
 
         private Map<Observer, Observer> observerMap = new HashMap<>();
-
-        /*@Override
-        public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer) {
-            super.observe(owner, observer);
-            try {
-                hook(observer);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }*/
 
         @Override
         public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<? super T> observer) {

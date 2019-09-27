@@ -42,15 +42,12 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
         injectPresenter(LoginPresenter(this))
 
         transparentFullScreen()
-        /*AppBus.with<String>("key")
-            .observe(this, Observer {
-                log("Login observe $it")
-            })*/
+
         AppBus.subscribe<String>(this, Observer {
             log("Login observe $it")
         })
         AppBus.subscribe<BusBean>(this, Observer {
-            log("Login observe BusBean")
+            log("Login observe BusBean ${it.message}")
         })
 
         val suggestions = resources.getStringArray(R.array.user_list)
@@ -67,9 +64,6 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
             login_login.visibility = View.INVISIBLE
             login_progressbar.visibility = View.VISIBLE
             mPresenter.tryLogin(username, password)*/
-
-            /*AppBus.with<String>("key")
-                .value = "fuck"*/
 
             AppBus.post("fuck")
             startActivity<MainActivity>()

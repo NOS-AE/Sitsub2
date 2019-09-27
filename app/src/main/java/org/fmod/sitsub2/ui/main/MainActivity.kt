@@ -2,6 +2,7 @@ package org.fmod.sitsub2.ui.main
 
 import androidx.lifecycle.Observer
 import org.fmod.sitsub2.AppBus
+import org.fmod.sitsub2.AppBus2
 import org.fmod.sitsub2.R
 import org.fmod.sitsub2.base.BaseActivity
 import org.fmod.sitsub2.model.BusBean
@@ -17,7 +18,6 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
 
     override fun setListeners() {
 
-
         AppBus.subscribeSticky<String>(this, Observer {
             log("Main sticky observe $it")
         })
@@ -25,6 +25,11 @@ class MainActivity : BaseActivity<MainContract.Presenter>(), MainContract.View {
             log("Main observe $it")
         })
         AppBus.post(BusBean("bean fuck"))
+        /*AppBus2.get()
+            .with<String>("sd")
+            .observe(this, Observer {
+
+            })*/
         /*AppBus.with<String>()
             .subscribe(this, Observer {
                 log("Main observe $it")
