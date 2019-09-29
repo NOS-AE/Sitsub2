@@ -1,27 +1,21 @@
-package org.fmod.sitsub2.ui.login
+package org.fmod.sitsub2.ui.face.login
 
-import android.annotation.SuppressLint
-import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_login.*
-import org.fmod.sitsub2.AppBus
 
-import org.fmod.sitsub2.AppBus2
 import org.fmod.sitsub2.R
 import org.fmod.sitsub2.base.BaseActivity
+import org.fmod.sitsub2.bean.Suggestion
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
-import org.fmod.sitsub2.model.BusBean
-import org.fmod.sitsub2.ui.main.MainActivity
+import org.fmod.sitsub2.ui.adapter.SuggestionAdapter
 import org.fmod.sitsub2.util.*
 
 class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.View {
 
     private lateinit var username: String
     private lateinit var password: String
+
+    private lateinit var list: ArrayList<Suggestion>
 
     override fun loginSuccess() {
         login_login.visibility = View.VISIBLE
@@ -43,32 +37,22 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
 
         transparentFullScreen()
 
-        AppBus.subscribe<String>(this, Observer {
-            log("Login observe $it")
-        })
-        AppBus.subscribe<BusBean>(this, Observer {
-            log("Login observe BusBean ${it.message}")
-        })
-
         val suggestions = resources.getStringArray(R.array.user_list)
-        ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, suggestions).also {
+        /*ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, suggestions).also {
             login_id.setAdapter(it)
+            login_id.threshold = 0
+        }*/
+        list = Suggestion.toSuggestionList(suggestions)
+        SuggestionAdapter(this, list).run {
+            login_id.setAdapter(this)
+            login_id.threshold = 0
         }
-
     }
 
     override fun setListeners() {
         login_login.setOnClickListener {
-            /*if(!loginCheck())
-                return@setOnClickListener
-            login_login.visibility = View.INVISIBLE
-            login_progressbar.visibility = View.VISIBLE
-            mPresenter.tryLogin(username, password)*/
-
-            AppBus.post("fuck")
-            startActivity<MainActivity>()
+            log("$list")
         }
-
     }
 
     private fun loginCheck(): Boolean {

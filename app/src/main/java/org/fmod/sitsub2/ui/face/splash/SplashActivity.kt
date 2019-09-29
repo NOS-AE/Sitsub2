@@ -1,10 +1,8 @@
-package org.fmod.sitsub2.ui.splash
+package org.fmod.sitsub2.ui.face.splash
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.fmod.sitsub2.R
-import org.fmod.sitsub2.ui.login.LoginActivity
+import org.fmod.sitsub2.ui.face.login.LoginActivity
 import org.fmod.sitsub2.util.startActivity
 
 class SplashActivity : AppCompatActivity() {

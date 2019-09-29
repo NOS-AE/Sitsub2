@@ -7,6 +7,7 @@ import android.widget.AutoCompleteTextView
 import org.fmod.sitsub2.util.log
 
 class SuggestionEditText: AutoCompleteTextView {
+
     constructor(context: Context): super(context)
     constructor(context: Context, attrs: AttributeSet): super(context, attrs)
 

@@ -21,15 +21,30 @@ fun toastWarning(msg: String) = Toasty.warning(MyApp.instance, msg).show()
 
 fun Any.log(msg: String?) {
     if(isDebug)
-        Log.d("$APP_TAG-${javaClass.simpleName}", msg)
+        Log.d("$APP_TAG-${javaClass.simpleName}", msg.toString())
 }
 
 fun Any.remoteLog(msg: String?) {
     if(isDebug)
-        Log.d("$REMOTE_TAG-${javaClass.simpleName}", msg)
+        Log.d("$REMOTE_TAG-${javaClass.simpleName}", msg.toString())
 }
 
 fun Any.localLog(msg: String?) {
     if(isDebug)
-        Log.d("$LOCAL_TAG-${javaClass.simpleName}", msg)
+        Log.d("$LOCAL_TAG-${javaClass.simpleName}", msg.toString())
+}
+
+fun Any.errorLog(msg: String?) {
+    if(isDebug)
+        Log.e("$APP_TAG-${javaClass.simpleName}", msg.toString())
+}
+
+fun Any.remoteErrorLog(msg: String?) {
+    if(isDebug)
+        Log.e("$REMOTE_TAG-${javaClass.simpleName}", msg.toString())
+}
+
+fun Any.localErrorLog(msg: String?) {
+    if(isDebug)
+        Log.e("$LOCAL_TAG-${javaClass.simpleName}", msg.toString())
 }

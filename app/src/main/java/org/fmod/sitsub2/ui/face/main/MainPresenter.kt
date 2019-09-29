@@ -1,4 +1,4 @@
-package org.fmod.sitsub2.ui.main
+package org.fmod.sitsub2.ui.face.main
 
 import org.fmod.sitsub2.base.BasePresenter
 

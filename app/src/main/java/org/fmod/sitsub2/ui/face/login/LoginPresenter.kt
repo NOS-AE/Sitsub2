@@ -1,4 +1,4 @@
-package org.fmod.sitsub2.ui.login
+package org.fmod.sitsub2.ui.face.login
 
 import org.fmod.sitsub2.base.BasePresenter
 import org.fmod.sitsub2.data.DataManager

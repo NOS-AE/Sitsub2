@@ -1,4 +1,4 @@
-package org.fmod.sitsub2.ui.login
+package org.fmod.sitsub2.ui.face.login
 
 import org.fmod.sitsub2.base.BaseContract
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
