@@ -8,11 +8,7 @@ import org.fmod.sitsub2.util.toastError
 import org.fmod.sitsub2.util.toastWarning
 
 
-class LoginPresenter(view: LoginContract.View): BasePresenter<LoginContract.View>(), LoginContract.Presenter {
-
-    init {
-        mView = view
-    }
+class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Presenter {
 
     override fun tryLogin(username: String, password: String) {
         launch {

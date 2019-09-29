@@ -109,17 +109,15 @@ abstract class BaseAdapter<T: BaseAdapter.BaseViewHolder, U>(var mList: List<U>)
         if(type is ParameterizedType) {
             val classViewHolder = type.actualTypeArguments[0] as Class<*>
             try {
-                val cons: Constructor<*>
-                return if(classViewHolder.isMemberClass && !Modifier.isStatic(classViewHolder.modifiers)){//内部且非静态类
-                    //获取内部类构造函数必须通过外部类
-                    cons = classViewHolder.getDeclaredConstructor(javaClass, View::class.java)
-                    cons.isAccessible = true
-                    cons.newInstance(this, itemView) as BaseViewHolder
-                } else {
-                    cons = classViewHolder.getDeclaredConstructor(View::class.java)
-                    cons.isAccessible = true
-                    cons.newInstance(this, itemView) as BaseViewHolder
-                }
+                val cons: Constructor<*> =
+                    if(classViewHolder.isMemberClass && !Modifier.isStatic(classViewHolder.modifiers)) {//内部且非静态类
+                        //获取内部类构造函数必须通过外部类
+                        classViewHolder.getDeclaredConstructor(javaClass, View::class.java)
+                    } else {
+                        classViewHolder.getDeclaredConstructor(View::class.java)
+                    }
+                cons.isAccessible = true
+                return cons.newInstance(this, itemView) as BaseViewHolder
             } catch (e: Exception) {
                 errorLog(e.message)
             }

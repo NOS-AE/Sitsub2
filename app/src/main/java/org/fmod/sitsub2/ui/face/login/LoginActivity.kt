@@ -4,13 +4,13 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
 
 import org.fmod.sitsub2.R
-import org.fmod.sitsub2.base.BaseActivity
+import org.fmod.sitsub2.base.BaseMvpActivity
 import org.fmod.sitsub2.bean.Suggestion
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
 import org.fmod.sitsub2.ui.adapter.SuggestionAdapter
 import org.fmod.sitsub2.util.*
 
-class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.View {
+class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
 
     private lateinit var username: String
     private lateinit var password: String
@@ -32,16 +32,11 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
     override fun getLayoutId() = R.layout.activity_login
 
     override fun initViews() {
-        //TODO 解决耦合
-        injectPresenter(LoginPresenter(this))
 
         transparentFullScreen()
 
         val suggestions = resources.getStringArray(R.array.user_list)
-        /*ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, suggestions).also {
-            login_id.setAdapter(it)
-            login_id.threshold = 0
-        }*/
+
         list = Suggestion.toSuggestionList(suggestions)
         SuggestionAdapter(this, list).run {
             login_id.setAdapter(this)
@@ -51,7 +46,11 @@ class LoginActivity : BaseActivity<LoginContract.Presenter>(), LoginContract.Vie
 
     override fun setListeners() {
         login_login.setOnClickListener {
-            log("$list")
+            if (!loginCheck())
+                return@setOnClickListener
+            mPresenter.tryLogin(username, password)
+            login_login.visibility = View.INVISIBLE
+            login_progressbar.visibility = View.VISIBLE
         }
     }
 

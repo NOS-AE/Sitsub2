@@ -12,6 +12,11 @@ import kotlin.coroutines.EmptyCoroutineContext
 abstract class BasePresenter<T: BaseContract.View>: BaseContract.Presenter {
     protected lateinit var mView: T
 
+    @Suppress("UNCHECKED_CAST")
+    override fun attach(view: BaseContract.View) {
+        mView = view as T
+    }
+
     protected fun launch(
         context: CoroutineContext = EmptyCoroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
