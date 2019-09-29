@@ -48,18 +48,22 @@ abstract class BaseMvpActivity<T: BaseContract.Presenter>: AppCompatActivity(), 
         initViews()
         //设置控件事件监听
         setListeners()
-        Log.d("MyApp", "fuck")
     }
 
     @Suppress("UNCHECKED_CAST")
     private fun createPresenter() {
-        val type = javaClass.genericSuperclass as ParameterizedType //获取父类type
-        val presenterClass = type.actualTypeArguments[0] as Class<*>
-        val cons = presenterClass.getDeclaredConstructor().apply {
-            isAccessible = true
+        try {
+            val type = javaClass.genericSuperclass as ParameterizedType //获取父类type
+            val presenterClass = type.actualTypeArguments[0] as Class<*> //获取Presenter真实类型
+            val cons = presenterClass.getDeclaredConstructor().apply {  //获取Presenter构造函数
+                isAccessible = true
+            }
+            mPresenter = cons.newInstance() as T
+            mPresenter.attach(this)
+        } catch (e: Exception) {
+            errorLog("构造Presenter失败：${e.message}")
         }
-        mPresenter = cons.newInstance() as T
-        mPresenter.attach(this)
+
     }
 
 

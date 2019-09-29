@@ -2,6 +2,8 @@ package org.fmod.sitsub2
 
 import android.app.Application
 import android.content.Context
+import androidx.room.Room
+import org.fmod.sitsub2.data.local.AppDB
 
 class MyApp: Application() {
 
@@ -13,5 +15,6 @@ class MyApp: Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        AppDB.db = Room.databaseBuilder(this, AppDB::class.java, "database").build()
     }
 }

@@ -4,6 +4,8 @@ import org.fmod.sitsub2.base.BasePresenter
 import org.fmod.sitsub2.data.DataManager
 import org.fmod.sitsub2.data.remote.RemoteHelper
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
+import org.fmod.sitsub2.util.localErrorLog
+import org.fmod.sitsub2.util.log
 import org.fmod.sitsub2.util.toastError
 import org.fmod.sitsub2.util.toastWarning
 
@@ -12,15 +14,15 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
 
     override fun tryLogin(username: String, password: String) {
         launch {
+            log("$username, $password\n")
             val response = RemoteHelper.basicLogin(username, password)
             if(response.isSuccessful){
                 DataManager.username = username
                 DataManager.password = password
             }
-
             when(response.code()){
                 401 -> {
-                    toastWarning("账号或密码错误")
+                    mView.unauthorized()
                 }
                 200 -> { //first create
                     mView.loginSuccess()
@@ -28,9 +30,26 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
                 201 -> { //created
                     mView.loginSuccess()
                 }
-                else -> toastError("请检查网络")
+                else -> mView.loginFail()
             }
         }
+    }
+
+    override fun addUserSuggestion(username: String) {
+        launch (tryBlock = {
+            DataManager.insertUserSuggestion(username)
+        }, catchBlock = {
+            localErrorLog("${it.message}")
+        })
+    }
+
+    override fun getUserSuggestion() {
+        launch(tryBlock = {
+            val res = DataManager.findAllUserSuggestion()
+            mView.onGetUserName(ArrayList(res))
+        }, catchBlock = {
+            localErrorLog("${it.message}")
+        })
     }
 
     override fun getUserInfo(basicResponse: BasicResponse) {

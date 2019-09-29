@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.item_suggestion.view.*
 import org.fmod.sitsub2.R
-import org.fmod.sitsub2.bean.Suggestion
+import org.fmod.sitsub2.data.local.entity.Suggestion
 import kotlin.collections.ArrayList
 
 private const val layoutId = R.layout.item_suggestion

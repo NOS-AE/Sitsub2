@@ -5,7 +5,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 import org.fmod.sitsub2.R
 import org.fmod.sitsub2.base.BaseMvpActivity
-import org.fmod.sitsub2.bean.Suggestion
+import org.fmod.sitsub2.data.local.entity.Suggestion
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
 import org.fmod.sitsub2.ui.adapter.SuggestionAdapter
 import org.fmod.sitsub2.util.*
@@ -18,9 +18,19 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
     private lateinit var list: ArrayList<Suggestion>
 
     override fun loginSuccess() {
-        login_login.visibility = View.VISIBLE
-        login_progressbar.visibility = View.GONE
         toastSuccess("登录成功")
+        finishLoading()
+        mPresenter.addUserSuggestion(username)
+    }
+
+    override fun loginFail() {
+        toastError("登录失败")
+        finishLoading()
+    }
+
+    override fun unauthorized() {
+        toastError("账号或密码错误")
+        finishLoading()
     }
 
     override fun getBasicResponseSuccess(basicResponse: BasicResponse) {
@@ -29,28 +39,34 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
 
     }
 
+    override fun onGetUserName(username: ArrayList<Suggestion>) {
+        list = username
+        SuggestionAdapter(this, username).run {
+            login_id.setAdapter(this)
+        }
+    }
+
     override fun getLayoutId() = R.layout.activity_login
 
     override fun initViews() {
 
         transparentFullScreen()
 
-        val suggestions = resources.getStringArray(R.array.user_list)
-
-        list = Suggestion.toSuggestionList(suggestions)
+        mPresenter.getUserSuggestion()
+        /*val suggestions = resources.getStringArray(R.array.user_list)
+        list = Suggestion.toSuggestionList(suggestions, SUG_USERNAME)
         SuggestionAdapter(this, list).run {
             login_id.setAdapter(this)
             login_id.threshold = 0
-        }
+        }*/
     }
 
     override fun setListeners() {
         login_login.setOnClickListener {
             if (!loginCheck())
                 return@setOnClickListener
+            startLoading()
             mPresenter.tryLogin(username, password)
-            login_login.visibility = View.INVISIBLE
-            login_progressbar.visibility = View.VISIBLE
         }
     }
 
@@ -73,5 +89,14 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
         return valid
     }
 
+    private fun finishLoading() {
+        login_login.visibility = View.VISIBLE
+        login_progressbar.visibility = View.GONE
+    }
+
+    private fun startLoading() {
+        login_login.visibility = View.INVISIBLE
+        login_progressbar.visibility = View.VISIBLE
+    }
 
 }
