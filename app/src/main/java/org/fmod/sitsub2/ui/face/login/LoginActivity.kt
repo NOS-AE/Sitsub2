@@ -41,7 +41,9 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
 
     override fun onGetUserName(username: ArrayList<Suggestion>) {
         list = username
-        SuggestionAdapter(this, username).run {
+        SuggestionAdapter(this, username){
+            mPresenter.deleteUserSuggestion(it)
+        }.run {
             login_id.setAdapter(this)
         }
     }

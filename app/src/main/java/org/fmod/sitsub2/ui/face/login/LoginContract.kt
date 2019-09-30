@@ -10,6 +10,7 @@ interface LoginContract {
         fun getUserInfo(basicResponse: BasicResponse)
         fun addUserSuggestion(username: String)
         fun getUserSuggestion()
+        fun deleteUserSuggestion(suggestion: Suggestion)
     }
     interface View: BaseContract.View {
         fun loginSuccess()

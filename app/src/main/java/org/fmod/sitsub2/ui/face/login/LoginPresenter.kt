@@ -2,12 +2,11 @@ package org.fmod.sitsub2.ui.face.login
 
 import org.fmod.sitsub2.base.BasePresenter
 import org.fmod.sitsub2.data.DataManager
+import org.fmod.sitsub2.data.local.entity.Suggestion
 import org.fmod.sitsub2.data.remote.RemoteHelper
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
 import org.fmod.sitsub2.util.localErrorLog
 import org.fmod.sitsub2.util.log
-import org.fmod.sitsub2.util.toastError
-import org.fmod.sitsub2.util.toastWarning
 
 
 class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Presenter {
@@ -39,7 +38,7 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
         launch (tryBlock = {
             DataManager.insertUserSuggestion(username)
         }, catchBlock = {
-            localErrorLog("${it.message}")
+            localErrorLog(it.message)
         })
     }
 
@@ -48,7 +47,15 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
             val res = DataManager.findAllUserSuggestion()
             mView.onGetUserName(ArrayList(res))
         }, catchBlock = {
-            localErrorLog("${it.message}")
+            localErrorLog(it.message)
+        })
+    }
+
+    override fun deleteUserSuggestion(suggestion: Suggestion) {
+        launch(tryBlock = {
+            DataManager.deleteSuggestion(suggestion)
+        }, catchBlock = {
+            localErrorLog(it.message)
         })
     }
 

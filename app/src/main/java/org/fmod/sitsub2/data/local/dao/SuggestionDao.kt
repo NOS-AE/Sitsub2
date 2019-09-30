@@ -1,11 +1,9 @@
 package org.fmod.sitsub2.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import org.fmod.sitsub2.data.local.SUG_USERNAME
 import org.fmod.sitsub2.data.local.entity.Suggestion
+import org.fmod.sitsub2.data.remote.model.recieve.User
 
 @Dao
 interface SuggestionDao {
@@ -15,4 +13,7 @@ interface SuggestionDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUserSuggestion(suggestion: Suggestion)
+
+    @Delete
+    suspend fun deleteSuggestion(suggestion: Suggestion)
 }

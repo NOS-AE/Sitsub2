@@ -11,10 +11,11 @@ import org.fmod.sitsub2.util.remoteLog
 
 object RetrofitProvider {
 
+    //重用retrofits和clients
     private val retrofits = HashMap<String, Retrofit>()
-    private lateinit var token: String
+    private val clients = HashMap<String, OkHttpClient>()
 
-    private fun createClient(): OkHttpClient {
+    private fun createClient(token: String): OkHttpClient {
         val logInterceptor = HttpLoggingInterceptor(object :HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
                 remoteLog(message)
@@ -35,27 +36,28 @@ object RetrofitProvider {
     }
 
     //通过baseUrl和返回数据是否JSON，创建多个retrofit实例
-    private fun createRetrofit(baseUrl: String, isJson: Boolean) {
+    private fun createRetrofit(baseUrl: String, isJson: Boolean, token: String): Retrofit {
+
+        //add client
+        val client = clients.getOrDefault(token, createClient(token))
 
         val builder = Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(createClient())
+            .client(client)
 
         if(isJson){
             builder.addConverterFactory(GsonConverterFactory.create())
         } else {
             builder.addConverterFactory(JaxbConverterFactory.create())
         }
-        retrofits["$baseUrl-$isJson"] = builder.build()
+        val res = builder.build()
+        retrofits["$baseUrl-$isJson"] = res
+        return res
     }
 
     fun getRetrofit(baseUrl: String, token: String, isJson: Boolean = true): Retrofit {
-        this.token = token
         val key = "$baseUrl-$isJson"
-        if(!retrofits.containsKey(key)) {
-            createRetrofit(baseUrl, isJson)
-        }
-        return retrofits[key] as Retrofit
+        return retrofits.getOrDefault(key, createRetrofit(baseUrl, isJson, token))
     }
 }
 

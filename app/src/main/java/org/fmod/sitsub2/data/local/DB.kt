@@ -15,4 +15,9 @@ object DB: IDB {
     override suspend fun insertUserSuggestion(username: String) {
         suggestionDao.insertUserSuggestion(Suggestion(username, SUG_USERNAME))
     }
+
+    override suspend fun deleteSuggestion(suggestion: Suggestion) {
+        suggestionDao.deleteSuggestion(suggestion)
+    }
+
 }
