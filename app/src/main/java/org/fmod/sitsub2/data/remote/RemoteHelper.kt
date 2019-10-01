@@ -13,12 +13,23 @@ object RemoteHelper {
     //使用Basic Auth获取token
     suspend fun basicLogin(id: String, pw: String) = withContext(Dispatchers.IO) {
         val token = Credentials.basic(id, pw)
-        remoteLog("token: $token")
         val authRequestModel = AuthRequestModel.generate()
-        val loginService = RetrofitProvider
+        val loginService = RetrofitProvider.instance
             .getRetrofit(GITHUB_API_BASE_URL, token)
             .create(LoginService::class.java)
         loginService.authorizations(authRequestModel)
+    }
+
+    suspend fun getAccessToken(code: String, state: String) = withContext(Dispatchers.IO) {
+        val loginService = RetrofitProvider.instance
+            .getRetrofit(GITHUB_BASE_URL, null)
+            .create(LoginService::class.java)
+        loginService.getAccessToken(
+            CLIENT_ID,
+            CLIENT_SECRET,
+            code,
+            state
+        )
     }
 
     suspend fun deleteGrant(grantId: String) = withContext(Dispatchers.IO) {

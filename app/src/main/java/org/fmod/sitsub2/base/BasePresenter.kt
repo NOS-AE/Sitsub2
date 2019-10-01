@@ -6,6 +6,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -36,6 +38,14 @@ abstract class BasePresenter<T: BaseContract.View>: BaseContract.Presenter {
             catchBlock(e)
         }finally {
             finallyBlock()
+        }
+    }
+
+    protected fun getErrorTip(e: Throwable): String {
+        return when(e) {
+            is UnknownHostException -> "加载失败，请检查网络"
+            is SocketTimeoutException -> "加载超时，请检查网络"
+            else -> "错误:${e.message}"
         }
     }
 }

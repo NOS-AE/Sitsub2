@@ -8,7 +8,7 @@ import retrofit2.http.Header
 interface UserService {
 
     @GET("user")
-    fun getPersonInfo(
+    fun getUserInfo(
         @Header("forceNetWork") forceNetWork: Boolean
     ): Response<User>
 }

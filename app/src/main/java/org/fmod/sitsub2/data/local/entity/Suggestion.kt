@@ -13,16 +13,6 @@ data class Suggestion(
     var type: Int //多种建议（用户名历史，搜索历史等）
 ) {
 
-    companion object {
-        fun toSuggestionList(array: Array<String>, type: Int): ArrayList<Suggestion> {
-            val res = ArrayList<Suggestion>()
-            array.forEach {
-                res.add(Suggestion(it, type))
-            }
-            return res
-        }
-    }
-
     override fun toString(): String {
         return text
     }

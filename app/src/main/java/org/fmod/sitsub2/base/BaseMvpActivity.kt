@@ -8,13 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import org.fmod.sitsub2.util.ThemeUtil
 import org.fmod.sitsub2.util.errorLog
 import org.fmod.sitsub2.util.log
+import org.fmod.sitsub2.util.toastError
 import java.lang.Exception
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseMvpActivity<T: BaseContract.Presenter>: AppCompatActivity(), BaseContract.View {
 
     protected lateinit var mPresenter: T
-
     /**
      * 设置布局
      *
@@ -32,11 +32,6 @@ abstract class BaseMvpActivity<T: BaseContract.Presenter>: AppCompatActivity(), 
      * 控件初始化
      */
     abstract fun initViews()
-
-    /*fun injectPresenter(presenter: T) {
-        mPresenter = presenter
-    }*/
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,5 +61,8 @@ abstract class BaseMvpActivity<T: BaseContract.Presenter>: AppCompatActivity(), 
 
     }
 
+    override fun showErrorToast(msg: String) {
+        toastError(msg)
+    }
 
 }

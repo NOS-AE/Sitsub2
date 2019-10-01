@@ -8,6 +8,6 @@ interface BaseContract {
     }
 
     interface View: LifecycleOwner {
-
+        fun showErrorToast(msg: String)
     }
 }

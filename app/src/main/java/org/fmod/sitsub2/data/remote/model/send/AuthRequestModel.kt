@@ -2,6 +2,9 @@ package org.fmod.sitsub2.data.remote.model.send
 
 import com.google.gson.annotations.SerializedName
 import org.fmod.sitsub2.BuildConfig
+import org.fmod.sitsub2.data.remote.CLIENT_ID
+import org.fmod.sitsub2.data.remote.CLIENT_SECRET
+import org.fmod.sitsub2.data.remote.REDIRECT_URL
 
 data class AuthRequestModel(
     var scopes: List<String>,
@@ -15,9 +18,9 @@ data class AuthRequestModel(
             AuthRequestModel(
                 arrayListOf("user", "repo", "gist", "notifications"),
                 BuildConfig.APPLICATION_ID,
-                BuildConfig.SITSUB2_REDIRECT_URL,
-                BuildConfig.SITSUB2_CLIENT_ID,
-                BuildConfig.SITSUB2_CLIENT_SECRET
+                REDIRECT_URL,
+                CLIENT_ID,
+                CLIENT_SECRET
             )
     }
 }
