@@ -119,7 +119,7 @@ abstract class BaseAdapter<T: BaseAdapter.BaseViewHolder, U>(var mList: List<U>)
                 cons.isAccessible = true
                 return cons.newInstance(this, itemView) as BaseViewHolder
             } catch (e: Exception) {
-                errorLog(e.message)
+                errorLog(e)
             }
         }
         return BaseViewHolder(itemView)

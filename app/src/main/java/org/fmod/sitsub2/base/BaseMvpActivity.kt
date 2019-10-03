@@ -56,7 +56,7 @@ abstract class BaseMvpActivity<T: BaseContract.Presenter>: AppCompatActivity(), 
             mPresenter = cons.newInstance() as T
             mPresenter.attach(this)
         } catch (e: Exception) {
-            errorLog("构造Presenter失败：${e.message}")
+            errorLog(e, "构造Presenter失败")
         }
 
     }

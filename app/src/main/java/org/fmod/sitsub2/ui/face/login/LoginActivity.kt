@@ -7,7 +7,7 @@ import org.fmod.sitsub2.AppOpener
 
 import org.fmod.sitsub2.R
 import org.fmod.sitsub2.base.BaseMvpActivity
-import org.fmod.sitsub2.data.local.entity.Suggestion
+import org.fmod.sitsub2.data.local.entity.UserSuggestion
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
 import org.fmod.sitsub2.ui.adapter.SuggestionAdapter
 import org.fmod.sitsub2.util.*
@@ -18,12 +18,12 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
     private lateinit var username: String
     private lateinit var password: String
 
-    override fun authSuccess(basicResponse: BasicResponse) {
+    override fun onAuthSuccess(basicResponse: BasicResponse) {
         toastInfo("认证成功，正在获取用户信息...")
         mPresenter.getUserInfo(basicResponse)
     }
 
-    override fun getInfoSuccess() {
+    override fun onLoginSuccess() {
         toastSuccess("登录成功")
         hideProgress()
     }
@@ -38,8 +38,8 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
         hideProgress()
     }
 
-    override fun onGetUserName(username: ArrayList<Suggestion>) {
-        SuggestionAdapter(this, username){
+    override fun onGetUserName(username: List<UserSuggestion>) {
+        SuggestionAdapter(this, ArrayList(username)){
             mPresenter.deleteUserSuggestion(it)
         }.run {
             login_id.setAdapter(this)

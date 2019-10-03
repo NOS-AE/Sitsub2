@@ -6,6 +6,7 @@ import okhttp3.Credentials
 import org.fmod.sitsub2.data.DataManager
 import org.fmod.sitsub2.data.remote.model.send.AuthRequestModel
 import org.fmod.sitsub2.data.remote.service.LoginService
+import org.fmod.sitsub2.data.remote.service.UserService
 import org.fmod.sitsub2.util.remoteLog
 
 object RemoteHelper {
@@ -32,7 +33,10 @@ object RemoteHelper {
         )
     }
 
-    suspend fun deleteGrant(grantId: String) = withContext(Dispatchers.IO) {
-        val token = Credentials.basic(DataManager.username, DataManager.password)
+    suspend fun getUserInfo(token: String) = withContext(Dispatchers.IO) {
+        val userService = RetrofitProvider.instance
+            .getRetrofit(GITHUB_API_BASE_URL, token)
+            .create(UserService::class.java)
+        userService.getUserInfo(true)
     }
 }

@@ -1,12 +1,14 @@
 package org.fmod.sitsub2.ui.face.login
 
 import android.net.Uri
+import android.util.Log
 import org.fmod.sitsub2.base.BasePresenter
 import org.fmod.sitsub2.data.DataManager
-import org.fmod.sitsub2.data.local.entity.Suggestion
+import org.fmod.sitsub2.data.local.entity.UserSuggestion
 import org.fmod.sitsub2.data.remote.REDIRECT_URL
 import org.fmod.sitsub2.data.remote.RemoteHelper
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
+import org.fmod.sitsub2.data.remote.model.recieve.User
 import org.fmod.sitsub2.util.*
 import kotlin.collections.ArrayList
 
@@ -16,11 +18,6 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
     override fun tryLogin(username: String, password: String) {
         launch({
             val response = RemoteHelper.basicLogin(username, password)
-            //TODO 不保存敏感信息
-            if (response.isSuccessful) {
-                DataManager.username = username
-                DataManager.password = password
-            }
 
             val status = response.code()
             if(status == 401) {
@@ -30,14 +27,14 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
                 if(basicToken == null)
                     mView.unauthorized()
                 else {
-                    mView.authSuccess(basicToken)
+                    mView.onAuthSuccess(basicToken)
                     addUserSuggestion(username)
                 }
             } else {
                 mView.unauthorized()
             }
         },{
-            remoteErrorLog(it.message)
+            remoteErrorLog(it)
             mView.loginFail(getErrorTip(it))
         })
     }
@@ -63,48 +60,60 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
                 if(oauth == null) {
                     mView.unauthorized()
                 } else {
-                    mView.authSuccess(BasicResponse(oauth))
+                    mView.onAuthSuccess(BasicResponse(oauth))
                 }
             } else {
                 mView.unauthorized()
             }
-        })/*, {
-            remoteErrorLog(it.message)
+        }, {
+            remoteErrorLog(it)
             mView.loginFail(getErrorTip(it))
-        }*/
+        })
     }
 
-    //保存basicLogin的用户名 TODO 不保存敏感信息
+    override fun getUserInfo(basicResponse: BasicResponse) {
+        launch({
+            val res = RemoteHelper.getUserInfo(basicResponse.accessToken)
+            saveAuthUser(basicResponse, res.body() as User)
+            mView.onLoginSuccess()
+        }, {
+            remoteErrorLog(it)
+            mView.loginFail(getErrorTip(it))
+        })
+    }
+
+    private fun saveAuthUser(basicResponse: BasicResponse, user: User) {
+        launch({
+            DataManager.updateAllToUnselected()
+        }, {
+            localErrorLog(it)
+        })
+    }
+
+    //保存basicLogin的用户名
     private fun addUserSuggestion(username: String) {
         launch ({
             DataManager.insertUserSuggestion(username)
         }, {
-            localErrorLog(it.message)
+            localErrorLog(it)
         })
     }
 
     override fun getUserSuggestion() {
         launch({
             val res = DataManager.findAllUserSuggestion()
-            mView.onGetUserName(ArrayList(res))
+            mView.onGetUserName(res)
         }, {
-            localErrorLog(it.message)
+            localErrorLog(it)
         })
     }
 
-    override fun deleteUserSuggestion(suggestion: Suggestion) {
+    override fun deleteUserSuggestion(userSuggestion: UserSuggestion) {
         launch({
-            DataManager.deleteSuggestion(suggestion)
+            DataManager.deleteSuggestion(userSuggestion)
         }, {
-            localErrorLog(it.message)
+            localErrorLog(it)
         })
     }
 
-    override fun getUserInfo(basicResponse: BasicResponse) {
-        launch({
-
-        }, {
-
-        })
-    }
 }

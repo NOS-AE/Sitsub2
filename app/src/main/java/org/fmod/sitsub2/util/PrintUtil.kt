@@ -34,17 +34,17 @@ fun Any.localLog(msg: String?) {
         Log.d("$LOCAL_TAG-${javaClass.simpleName}", msg.toString())
 }
 
-fun Any.errorLog(msg: String?) {
+fun Any.errorLog(e: Throwable, msg: String = "") {
     if(isDebug)
-        Log.e("$APP_TAG-${javaClass.simpleName}", msg.toString())
+        Log.e("$APP_TAG-${javaClass.simpleName}", "${e::class.java.simpleName}$msg", e)
 }
 
-fun Any.remoteErrorLog(msg: String?) {
+fun Any.remoteErrorLog(e: Throwable, msg: String = "") {
     if(isDebug)
-        Log.e("$REMOTE_TAG-${javaClass.simpleName}", msg.toString())
+        Log.e("$REMOTE_TAG-${javaClass.simpleName}", "${e::class.java.simpleName}$msg", e)
 }
 
-fun Any.localErrorLog(msg: String?) {
+fun Any.localErrorLog(e: Throwable, msg: String = "") {
     if(isDebug)
-        Log.e("$LOCAL_TAG-${javaClass.simpleName}", msg.toString())
+        Log.e("$LOCAL_TAG-${javaClass.simpleName}", "${e::class.java.simpleName}$msg", e)
 }

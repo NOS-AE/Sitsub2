@@ -30,6 +30,14 @@ android {
         buildConfigField "String", "SITSUB2_CLIENT_ID", (buildProperties.getLocal['sitsub2_client_id'] | buildProperties.getPublic['sitsub2_client_id']).string
         buildConfigField "String", "SITSUB2_CLIENT_SECRET", (buildProperties.getLocal['sitsub2_client_secret'] | buildProperties.getPublic['sitsub2_client_secret']).string
         buildConfigField "String", "SITSUB2_REDIRECT_URL", (buildProperties.getLocal['sitsub2_redirect_url'] | buildProperties.getPublic['sitsub2_redirect_url']).string
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.incremental":"true"
+                ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -51,6 +59,9 @@ android {
 
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
+    }
+    androidExtensions {
+        experimental = true
     }
 }
 

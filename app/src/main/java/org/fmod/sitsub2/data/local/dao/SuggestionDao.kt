@@ -2,18 +2,17 @@ package org.fmod.sitsub2.data.local.dao
 
 import androidx.room.*
 import org.fmod.sitsub2.data.local.SUG_USERNAME
-import org.fmod.sitsub2.data.local.entity.Suggestion
-import org.fmod.sitsub2.data.remote.model.recieve.User
+import org.fmod.sitsub2.data.local.entity.UserSuggestion
 
 @Dao
 interface SuggestionDao {
 
-    @Query("SELECT * from Suggestion WHERE type = $SUG_USERNAME ORDER BY text ASC")
-    suspend fun findUserSuggestion(): List<Suggestion>
+    @Query("SELECT * from UserSuggestion ORDER BY text ASC")
+    suspend fun findUserSuggestion(): List<UserSuggestion>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertUserSuggestion(suggestion: Suggestion)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUserSuggestion(userSuggestion: UserSuggestion)
 
     @Delete
-    suspend fun deleteSuggestion(suggestion: Suggestion)
+    suspend fun deleteSuggestion(userSuggestion: UserSuggestion)
 }

@@ -2,7 +2,7 @@ package org.fmod.sitsub2.ui.face.login
 
 import android.net.Uri
 import org.fmod.sitsub2.base.BaseContract
-import org.fmod.sitsub2.data.local.entity.Suggestion
+import org.fmod.sitsub2.data.local.entity.UserSuggestion
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
 
 interface LoginContract {
@@ -11,15 +11,15 @@ interface LoginContract {
         fun handleOAuth(uri: Uri?) //处理redirect back的数据，获取access_token
         fun getUserInfo(basicResponse: BasicResponse) //通过access_token
         fun getUserSuggestion()
-        fun deleteUserSuggestion(suggestion: Suggestion)
+        fun deleteUserSuggestion(userSuggestion: UserSuggestion)
     }
     interface View: BaseContract.View {
         fun showProgress()
         fun hideProgress()
-        fun authSuccess(basicResponse: BasicResponse)
+        fun onAuthSuccess(basicResponse: BasicResponse)
         fun unauthorized()
-        fun getInfoSuccess()
+        fun onLoginSuccess()
         fun loginFail(msg: String)
-        fun onGetUserName(username: ArrayList<Suggestion>)
+        fun onGetUserName(username: List<UserSuggestion>)
     }
 }

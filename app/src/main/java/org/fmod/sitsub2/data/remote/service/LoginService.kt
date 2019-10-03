@@ -15,12 +15,13 @@ interface LoginService {
     ): Response<BasicResponse>
 
     @POST("login/oauth/access_token")
+    @FormUrlEncoded
     @Headers("Accept: application/json")
     suspend fun getAccessToken(
-        @Query("client_id") clientId: String,
-        @Query("client_secret") clientSecret: String,
-        @Query("code") code: String,
-        @Query("state") state: String
+        @Field("client_id") clientId: String,
+        @Field("client_secret") clientSecret: String,
+        @Field("code") code: String,
+        @Field("state") state: String
     ): Response<OAuthResponse>
 
 

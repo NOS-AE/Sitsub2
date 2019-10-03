@@ -48,11 +48,11 @@ class RetrofitProvider private constructor(){
             .baseUrl(baseUrl)
             .client(createClient())
 
-        if(isJson){
-            builder.addConverterFactory(GsonConverterFactory.create())
-        } else {
-            builder.addConverterFactory(JaxbConverterFactory.create())
-        }
+        //if(isJson){
+            builder.addConverterFactory(GsonConverterFactory.create()) //JSON
+        /*} else {
+            builder.addConverterFactory(JaxbConverterFactory.create()) //XML
+        }*/
         val res = builder.build()
         retrofits["$baseUrl-$isJson"] = res
         return res

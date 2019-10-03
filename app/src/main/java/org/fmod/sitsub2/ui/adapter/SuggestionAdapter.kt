@@ -29,11 +29,11 @@ private const val layoutId = R.layout.item_suggestion
  * 此处选择方法二，因为如使用默认Filter，移除时移除的不是mObjects，即使通知更新视图，视图也不会马上发生改变
  */
 
-class SuggestionAdapter(
+class SuggestionAdapter<T: Suggestion>(
     context: Context,
-    suggestions: ArrayList<Suggestion>,
-    private var onDelete: (Suggestion)->Unit
-): ArrayAdapter<Suggestion>(context, layoutId, suggestions) {
+    suggestions: ArrayList<T>,
+    private var onDelete: (T)->Unit
+): ArrayAdapter<T>(context, layoutId, suggestions) {
 
     // ArrayAdapter内部使用mObject用于显示建议
     // 一旦ArrayFilter被使用，其内部将会用另一个对象保存源数据，mObject此时相当于被过滤后的列表
@@ -41,8 +41,9 @@ class SuggestionAdapter(
     val originalList = ArrayList(suggestions)
     private val mFilter = object : Filter(){
 
+        @Suppress("UNCHECKED_CAST")
         override fun convertResultToString(resultValue: Any?): CharSequence {
-            return (resultValue as Suggestion).text
+            return (resultValue as T).text
         }
 
         override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -53,7 +54,7 @@ class SuggestionAdapter(
                     res.count = originalList.size
                 } else {    //过滤
                     val filter = constraint.toString().toLowerCase(Locale.ENGLISH)
-                    val entries = ArrayList<Suggestion>()
+                    val entries = ArrayList<T>()
                     originalList.forEach {
                         if (it.text.toLowerCase(Locale.ENGLISH).contains(filter))
                             entries.add(it)
@@ -68,9 +69,9 @@ class SuggestionAdapter(
         @Suppress("UNCHECKED_CAST")
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             clear()
-            val res = results?.values as? ArrayList<Suggestion>
+            val res = results?.values as? ArrayList<T>
             if(!res.isNullOrEmpty()){   //显示过滤后的建议
-                addAll(results.values as ArrayList<Suggestion>)
+                addAll(results.values as ArrayList<T>)
                 notifyDataSetChanged()
             } else {
                 notifyDataSetInvalidated()
@@ -78,6 +79,7 @@ class SuggestionAdapter(
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val res: View
         if(convertView == null) {
@@ -92,7 +94,7 @@ class SuggestionAdapter(
         holder.remove.setOnClickListener {
             //移除Suggestion
             val suggestion = getItem(position)
-            onDelete(suggestion as Suggestion)
+            onDelete(suggestion as T)
             remove(suggestion)
             originalList.remove(suggestion)
         }
@@ -103,7 +105,7 @@ class SuggestionAdapter(
         return mFilter
     }
 
-    inner class ViewHolder(itemView: View) {
+    class ViewHolder(itemView: View) {
         val text: TextView = itemView.suggestion_text
         val remove: ImageView = itemView.suggestion_remove
     }
