@@ -1,15 +1,13 @@
 package org.fmod.sitsub2.data.local.dao
 
 import androidx.room.*
+import org.fmod.sitsub2.base.BaseDao
 import org.fmod.sitsub2.data.local.entity.AuthUser
 import java.util.*
 
 @Dao
 @TypeConverters(AuthUserDao.AuthUserConverter::class)
-interface AuthUserDao {
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAuthUser(authUser: AuthUser)
+interface AuthUserDao: BaseDao<AuthUser> {
 
     @Query("UPDATE AuthUser SET selected = 0 WHERE selected = 1")
     suspend fun updateAllToUnselected()

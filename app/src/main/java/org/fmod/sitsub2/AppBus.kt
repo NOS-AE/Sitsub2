@@ -1,12 +1,13 @@
 package org.fmod.sitsub2
 
+import android.os.Looper
 import androidx.lifecycle.*
 import org.fmod.sitsub2.util.log
 import java.lang.Exception
 
 /**
  * Map<K,V>
- *     K: 事件类型
+ *     K: 事件类型，作为通道标识
  *     V: 事件
  * 将用户主动调用的函数中的observe封装命名为为subscribe
  *
@@ -19,6 +20,23 @@ object AppBus {
         HashMap<Class<*>, MyLiveData<Any>>()
     }
 
+    /**
+     * 发送消息
+     */
+    inline fun <reified T>post(message: T) {
+        val eventType = T::class.java
+        if(!bus.containsKey(eventType)){
+            bus[eventType] = MyLiveData()
+        }
+        if(Looper.myLooper() == Looper.getMainLooper())
+            bus[eventType]?.value = message
+        else
+            bus[eventType]?.postValue(message)
+    }
+
+    /**
+     * 订阅
+     */
     @Suppress("UNCHECKED_CAST")
     inline fun <reified T>subscribe(owner: LifecycleOwner, observer: Observer<in T>) {
         val eventType = T::class.java
@@ -28,6 +46,9 @@ object AppBus {
         (bus[eventType] as MyLiveData<T>?)?.subscribe(owner, observer)
     }
 
+    /**
+     * 粘性订阅
+     */
     @Suppress("UNCHECKED_CAST")
     inline fun <reified T>subscribeSticky(owner: LifecycleOwner, observer: Observer<in T>) {
         val eventType = T::class.java
@@ -37,12 +58,30 @@ object AppBus {
         (bus[eventType] as MyLiveData<T>?)?.subscribeSticky(owner, observer)
     }
 
-    inline fun <reified T>post(message: T) {
+    /**
+     * 非生命周期同步
+     * 订阅
+     */
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T>subscribe(observer: Observer<in T>) {
         val eventType = T::class.java
         if(!bus.containsKey(eventType)){
             bus[eventType] = MyLiveData()
         }
-        bus[eventType]?.value = message
+        (bus[eventType] as MyLiveData<T>?)?.subscribeForever(observer)
+    }
+
+    /**
+     * 非生命周期同步
+     * 粘性订阅
+     */
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T>subscribeSticky(observer: Observer<in T>) {
+        val eventType = T::class.java
+        if(!bus.containsKey(eventType)){
+            bus[eventType] = MyLiveData()
+        }
+        (bus[eventType] as MyLiveData<T>?)?.subscribeForeverSticky(observer)
     }
 
     //TODO 清除sticky事件
@@ -55,7 +94,10 @@ object AppBus {
         }
 
         /**
-         * 不接收订阅前发布的消息
+         * 订阅
+         * @param owner Fragment, Activity等生命周期持有者
+         *
+         * @param observer 观察者
          */
         fun subscribe(owner: LifecycleOwner, observer: Observer<in T>) {
             observe(owner, observer)
@@ -68,19 +110,26 @@ object AppBus {
         }
 
         /**
-         * 接收粘性消息，observe默认粘性
+         * 粘性订阅
          */
         fun subscribeSticky(owner: LifecycleOwner, observer: Observer<in T>) {
             observe(owner, observer)
         }
 
         /**
-         * 非生命周期同步，hook失效，用Wrapper处理sticky
+         * 非生命周期同步订阅
          */
         fun subscribeForever(observer: Observer<in T>) {
             //用Wrapper封装，处理sticky
             observerMap[observer] = ObserverWrapper(observer)
             observeForever(observerMap[observer] as Observer<in T>)
+        }
+
+        /**
+         * 非生命周期同步粘性订阅
+         */
+        fun subscribeForeverSticky(observer: Observer<in T>) {
+            observeForever(observer)
         }
 
         override fun removeObserver(observer: Observer<in T>) {

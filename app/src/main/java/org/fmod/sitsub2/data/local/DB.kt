@@ -10,11 +10,11 @@ object DB: IDB {
     private val authUserDao by lazy { AppDB.db.authUserDao() }
 
     override suspend fun findAllUserSuggestion(): List<UserSuggestion> {
-        return suggestionDao.findUserSuggestion()
+        return suggestionDao.findAll()
     }
 
     override suspend fun insertUserSuggestion(username: String) {
-        suggestionDao.insertUserSuggestion(UserSuggestion(username))
+        suggestionDao.insert(UserSuggestion(username))
     }
 
     override suspend fun deleteSuggestion(userSuggestion: UserSuggestion) {
@@ -22,7 +22,7 @@ object DB: IDB {
     }
 
     override suspend fun insertAuthUser(authUser: AuthUser) {
-        authUserDao.insertAuthUser(authUser)
+        authUserDao.insert(authUser)
     }
 
     override suspend fun updateAllToUnselected() {
