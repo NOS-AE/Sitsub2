@@ -10,6 +10,7 @@ import org.fmod.sitsub2.base.BaseMvpActivity
 import org.fmod.sitsub2.data.local.entity.UserSuggestion
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
 import org.fmod.sitsub2.ui.adapter.SuggestionAdapter
+import org.fmod.sitsub2.ui.face.main.MainActivity
 import org.fmod.sitsub2.util.*
 import kotlin.collections.ArrayList
 
@@ -26,6 +27,8 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
     override fun onLoginSuccess() {
         toastSuccess("登录成功")
         hideProgress()
+        startActivity<MainActivity>()
+        finish()
     }
 
     override fun loginFail(msg: String) {
@@ -47,6 +50,10 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
     }
 
     override fun getLayoutId() = R.layout.activity_login
+
+    override fun getViews() {
+
+    }
 
     override fun initViews() {
 

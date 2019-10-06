@@ -10,10 +10,13 @@ import java.util.*
 interface AuthUserDao: BaseDao<AuthUser> {
 
     @Query("UPDATE AuthUser SET selected = 0 WHERE selected = 1")
-    suspend fun updateAllToUnselected()
+    suspend fun updateToUnselected()
 
-    @Query("SELECT * from AuthUser ORDER BY authTime ASC")
-    suspend fun findAll(): List<AuthUser>
+    @Query("SELECT * FROM AuthUser ORDER BY authTime ASC")
+    suspend fun find(): List<AuthUser>
+
+    @Query("DELETE FROM AuthUser WHERE loginId = :loginId")
+    suspend fun deleteByLoginId(loginId: String)
 
     object AuthUserConverter {
 

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- usually colorPrimary -->
+    <attr name="themeColor1" format="color|reference"/>
+    <!-- usually colorPrimaryDark -->
+    <attr name="themeColor2" format="color|reference"/>
+    <!-- usually colorAccent -->
+    <attr name="themeColor3" format="color|reference"/>
+    <!-- usually windowBackground -->
+    <attr name="themeColor4" format="color|reference"/>
+
     <attr name="cardBg" format="color|reference"/>
+    <attr name="activeColor" format="color|reference"/>
+    <attr name="textGrey" format="color|reference"/>
 
 </resources>

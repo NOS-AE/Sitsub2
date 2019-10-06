@@ -1,13 +1,11 @@
 package org.fmod.sitsub2.base
 
 import android.os.Bundle
-import android.os.IInterface
-import android.util.Log
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import org.fmod.sitsub2.util.ThemeUtil
 import org.fmod.sitsub2.util.errorLog
-import org.fmod.sitsub2.util.log
 import org.fmod.sitsub2.util.toastError
 import java.lang.Exception
 import java.lang.reflect.ParameterizedType
@@ -15,6 +13,8 @@ import java.lang.reflect.ParameterizedType
 abstract class BaseMvpActivity<T: BaseContract.Presenter>: AppCompatActivity(), BaseContract.View {
 
     protected lateinit var mPresenter: T
+
+    protected lateinit var mToolbar: Toolbar
     /**
      * 设置布局
      *
@@ -33,16 +33,25 @@ abstract class BaseMvpActivity<T: BaseContract.Presenter>: AppCompatActivity(), 
      */
     abstract fun initViews()
 
+    /**
+     * 继承控件初始化
+     */
+    abstract fun getViews()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ThemeUtil.setTheme(this)
         createPresenter()
-        //设置布局
         setContentView(getLayoutId())
-        //初始化控件样式
+        getViews()
+        initToolbar()
         initViews()
-        //设置控件事件监听
         setListeners()
+    }
+
+    protected open fun initToolbar() {
+        if(!this::mToolbar.isInitialized) return
+        setSupportActionBar(mToolbar)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -58,7 +67,6 @@ abstract class BaseMvpActivity<T: BaseContract.Presenter>: AppCompatActivity(), 
         } catch (e: Exception) {
             errorLog(e, "构造Presenter失败")
         }
-
     }
 
     override fun showErrorToast(msg: String) {

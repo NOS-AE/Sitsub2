@@ -1,16 +1,17 @@
 package org.fmod.sitsub2.ui.face.login
 
 import android.net.Uri
-import android.util.Log
+import org.fmod.sitsub2.AppData
 import org.fmod.sitsub2.base.BasePresenter
 import org.fmod.sitsub2.data.DataManager
+import org.fmod.sitsub2.data.local.entity.AuthUser
 import org.fmod.sitsub2.data.local.entity.UserSuggestion
 import org.fmod.sitsub2.data.remote.REDIRECT_URL
 import org.fmod.sitsub2.data.remote.RemoteHelper
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
 import org.fmod.sitsub2.data.remote.model.recieve.User
 import org.fmod.sitsub2.util.*
-import kotlin.collections.ArrayList
+import java.util.*
 
 
 class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Presenter {
@@ -84,7 +85,23 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
 
     private fun saveAuthUser(basicResponse: BasicResponse, user: User) {
         launch({
-            DataManager.updateAllToUnselected()
+            DataManager.authUserDao.updateToUnselected()
+            DataManager.authUserDao.deleteByLoginId(user.login)
+
+            val authUser = AuthUser(
+                basicResponse.accessToken,
+                Date(),
+                360 * 24 * 60 * 60,
+                basicResponse.scopes.toString(","),
+                true,
+                user.login,
+                user.name,
+                user.avatarUrl
+            )
+
+            DataManager.authUserDao.insertReplace(authUser)
+            AppData.authUser = authUser
+            AppData.loggedUser = user
         }, {
             localErrorLog(it)
         })
@@ -93,7 +110,7 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
     //保存basicLogin的用户名
     private fun addUserSuggestion(username: String) {
         launch ({
-            DataManager.insertUserSuggestion(username)
+            DataManager.userSuggestionDao.insertReplace(UserSuggestion(username))
         }, {
             localErrorLog(it)
         })
@@ -101,7 +118,7 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
 
     override fun getUserSuggestion() {
         launch({
-            val res = DataManager.findAllUserSuggestion()
+            val res = DataManager.userSuggestionDao.find()
             mView.onGetUserName(res)
         }, {
             localErrorLog(it)
@@ -110,7 +127,7 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
 
     override fun deleteUserSuggestion(userSuggestion: UserSuggestion) {
         launch({
-            DataManager.deleteSuggestion(userSuggestion)
+            DataManager.userSuggestionDao.deleteSuggestion(userSuggestion)
         }, {
             localErrorLog(it)
         })

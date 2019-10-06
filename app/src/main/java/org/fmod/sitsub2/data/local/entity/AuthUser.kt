@@ -21,6 +21,4 @@ data class AuthUser(
     var loginId: String,
     var name: String,
     var avatar: String
-): Parcelable {
-
-}
+): Parcelable

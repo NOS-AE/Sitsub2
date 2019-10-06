@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="dtgTextPrimary">@color/lightBlack</color>
+    <color name="dtgTextSecondary">@color/hint</color>
+    <color name="dtgCardBg">@color/white</color>
+
+    <style name="ThemeDarkTurquoiseGrey" parent="BaseTheme">
+        <item name="themeColor1">#222831</item>
+        <item name="themeColor2">#393e46</item>
+        <item name="themeColor3">#00adb5</item>
+        <item name="themeColor4">#eeeeee</item>
+
+        <item name="android:textColorPrimary">@color/dtgTextPrimary</item>
+        <item name="android:textColorSecondary">@color/dtgTextSecondary</item>
+        <item name="cardBg">@color/dtgCardBg</item>
+        <item name="activeColor">?themeColor3</item>
+        <item name="textGrey">?themeColor2</item>
+
+    </style>
+
+</resources>

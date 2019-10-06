@@ -7,8 +7,7 @@ import org.fmod.sitsub2.data.DataManager
 object ThemeUtil {
 
     private val styles = intArrayOf(
-        R.style.ThemeDarkTurquoiseGrey,
-        R.style.ThemeDarkPinkSkin
+        R.style.ThemeDarkTurquoiseGrey
     )
 
 

@@ -2,7 +2,7 @@
 <resources>
 
     <color name="colorPrimary">@color/clTheme3</color>
-    <color name="colorPrimaryDark">@color/clTheme1</color>
+    <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">@color/clTheme4</color>
 
 
@@ -16,4 +16,10 @@
     <color name="lightBlack">#212121</color>
     <color name="hint">#757575</color>
     <color name="black">#000000</color>
+    
+    <color name="refresh_color1">#f15b6c</color>
+    <color name="refresh_color2">#fdb933</color>
+    <color name="refresh_color3">#45b97c</color>
+    <color name="refresh_color4">#426ab3</color>
+    
 </resources>

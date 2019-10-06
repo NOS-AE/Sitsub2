@@ -13,7 +13,7 @@ abstract class AppDB: RoomDatabase() {
 
         lateinit var db: AppDB
     }
-    abstract fun suggestionDao(): UserSuggestionDao
+    abstract fun userSuggestionDao(): UserSuggestionDao
     abstract fun authUserDao(): AuthUserDao
 
 }
