@@ -1,57 +1,23 @@
 package org.fmod.sitsub2.base
 
 import android.os.Bundle
-import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import org.fmod.sitsub2.util.ThemeUtil
 import org.fmod.sitsub2.util.errorLog
 import org.fmod.sitsub2.util.toastError
 import java.lang.Exception
 import java.lang.reflect.ParameterizedType
 
-abstract class BaseMvpActivity<T: BaseContract.Presenter>: AppCompatActivity(), BaseContract.View {
+abstract class BaseMvpActivity<T: BaseContract.Presenter>: BaseActivity(), BaseContract.View {
 
     protected lateinit var mPresenter: T
 
-    protected lateinit var mToolbar: Toolbar
-    /**
-     * 设置布局
-     *
-     * @return 布局资源Id
-     */
-    @LayoutRes
-    abstract fun getLayoutId(): Int
-
-    /**
-     * 控件监听
-     */
-    abstract fun setListeners()
-
-    /**
-     * 控件初始化
-     */
-    abstract fun initViews()
-
-    /**
-     * 继承控件初始化
-     */
-    abstract fun getViews()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ThemeUtil.setTheme(this)
         createPresenter()
-        setContentView(getLayoutId())
-        getViews()
-        initToolbar()
-        initViews()
-        setListeners()
+        onPresenterCreated()
     }
 
-    protected open fun initToolbar() {
-        if(!this::mToolbar.isInitialized) return
-        setSupportActionBar(mToolbar)
+    open fun onPresenterCreated() {
+
     }
 
     @Suppress("UNCHECKED_CAST")

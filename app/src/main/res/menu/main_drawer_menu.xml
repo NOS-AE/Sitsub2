@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <group
         android:id="@+id/user_operation"
         >
@@ -26,10 +27,6 @@
             android:icon="@drawable/ic_notifications"
             android:title="通知"/>
         <item
-            android:id="@+id/nav_news"
-            android:icon="@drawable/ic_news"
-            android:title="动态"/>
-        <item
             android:id="@+id/nav_issues"
             android:icon="@drawable/ic_issues"
             android:title="问题"/>
@@ -38,10 +35,6 @@
     <group
         android:id="@+id/repository"
         >
-        <item
-            android:id="@+id/nav_owned"
-            android:icon="@drawable/ic_repo"
-            android:title="我的库"/>
         <item
             android:id="@+id/nav_starred"
             android:icon="@drawable/ic_star"

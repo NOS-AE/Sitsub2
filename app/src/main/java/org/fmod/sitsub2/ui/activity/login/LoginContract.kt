@@ -1,4 +1,4 @@
-package org.fmod.sitsub2.ui.face.login
+package org.fmod.sitsub2.ui.activity.login
 
 import android.net.Uri
 import org.fmod.sitsub2.base.BaseContract

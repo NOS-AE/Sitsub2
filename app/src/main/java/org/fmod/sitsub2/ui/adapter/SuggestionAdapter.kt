@@ -20,9 +20,7 @@ private const val layoutId = R.layout.item_suggestion
 
 /**
  * 自定义SuggestionAdapter来显示输入时的建议popUp（text，removeButton）
- */
-
-/**
+ *
  * 泛型为自定义类型，要使选择suggestion返回想要的字符串
  * 方法一：重载自定义类型toString
  * 方法二；自定义Filter，重载convertResultToString

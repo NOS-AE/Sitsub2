@@ -1,4 +1,4 @@
-package org.fmod.sitsub2.ui.face.login
+package org.fmod.sitsub2.ui.activity.login
 
 import android.content.Intent
 import android.view.View
@@ -10,7 +10,7 @@ import org.fmod.sitsub2.base.BaseMvpActivity
 import org.fmod.sitsub2.data.local.entity.UserSuggestion
 import org.fmod.sitsub2.data.remote.model.recieve.BasicResponse
 import org.fmod.sitsub2.ui.adapter.SuggestionAdapter
-import org.fmod.sitsub2.ui.face.main.MainActivity
+import org.fmod.sitsub2.ui.activity.main.MainActivity
 import org.fmod.sitsub2.util.*
 import kotlin.collections.ArrayList
 
@@ -51,14 +51,11 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.View {
 
     override fun getLayoutId() = R.layout.activity_login
 
-    override fun getViews() {
-
+    override fun initViews() {
+        transparentFullScreen()
     }
 
-    override fun initViews() {
-
-        transparentFullScreen()
-
+    override fun onPresenterCreated() {
         mPresenter.getUserSuggestion()
     }
 

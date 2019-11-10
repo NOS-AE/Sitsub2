@@ -18,6 +18,9 @@ interface AuthUserDao: BaseDao<AuthUser> {
     @Query("DELETE FROM AuthUser WHERE loginId = :loginId")
     suspend fun deleteByLoginId(loginId: String)
 
+    @Query("SELECT * FROM AuthUser WHERE selected = 1")
+    suspend fun findSelected(): AuthUser
+
     object AuthUserConverter {
 
         @TypeConverter

@@ -11,30 +11,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/ThemeDarkTurquoiseGrey">
-        <activity android:name="org.fmod.sitsub2.ui.face.main.MainActivity"/>
-
+        android:theme="@style/ThemeLight">
+        <activity android:name="org.fmod.sitsub2.ui.activity.profile.ProfileActivity" />
+        <activity android:name="org.fmod.sitsub2.ui.activity.main.MainActivity" />
         <activity
-            android:name="org.fmod.sitsub2.ui.face.splash.SplashActivity"
-            android:theme="@style/SplashTheme">
-        </activity>
-
-        <activity android:name="org.fmod.sitsub2.ui.face.login.LoginActivity"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data
-                    android:host="callback"
-                    android:scheme="sitsub2"/>
-            </intent-filter>
-        </activity>
+            android:name="org.fmod.sitsub2.ui.activity.splash.SplashActivity"
+            android:theme="@style/SplashTheme"/>
 
         <activity-alias
             android:name=".Launch"
-            android:targetActivity=".ui.face.main.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:targetActivity="org.fmod.sitsub2.ui.activity.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,6 +29,20 @@
             </intent-filter>
         </activity-alias>
 
+        <activity
+            android:name="org.fmod.sitsub2.ui.activity.login.LoginActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="callback"
+                    android:scheme="sitsub2" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

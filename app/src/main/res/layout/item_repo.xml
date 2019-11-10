@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    app:cardElevation="12dp"
+    app:cardCornerRadius="3dp"
+    app:cardBackgroundColor="?themeColor1"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?selectableItemBackground"
+        android:background="?themeColor2"
+        android:orientation="vertical"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            >
+
+            <TextView
+                android:id="@+id/repo_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="16sp"
+                android:textColor="?themeColor3"
+                android:maxLines="1"
+                android:text="Sitsub2"
+                />
+
+            <TextView
+                android:id="@+id/repo_topic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/repo_name"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                android:textColor="?android:textColorSecondary"
+                android:textSize="12sp"
+                android:text="低仿OpenHub"
+                />
+
+            <TextView
+                android:id="@+id/repo_lang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/repo_topic"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center_vertical"
+                android:drawableStart="@drawable/lang_bg"
+                android:layout_marginTop="10dp"
+                android:drawableTint="#b07219"
+                android:drawablePadding="5dp"
+                android:textColor="?android:textColorSecondary"
+                android:text="Java"
+                android:textSize="12sp"
+                />
+
+            <com.nosae.industryapp.view.MyTextView
+                android:id="@+id/repo_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/repo_lang"
+                app:layout_constraintTop_toTopOf="@id/repo_lang"
+                app:layout_constraintBottom_toBottomOf="@id/repo_lang"
+                android:layout_marginStart="15dp"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_star"
+                app:drawableLeftHeight="10dp"
+                app:drawableLeftWidth="10dp"
+                android:drawableTint="?android:textColorSecondary"
+                android:drawablePadding="5dp"
+                android:textColor="?android:textColorSecondary"
+                android:text="7.5k"
+                android:textSize="12sp"
+                />
+
+            <com.nosae.industryapp.view.MyTextView
+                android:id="@+id/repo_fork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/repo_star"
+                app:layout_constraintTop_toTopOf="@id/repo_lang"
+                app:layout_constraintBottom_toBottomOf="@id/repo_lang"
+                android:layout_marginStart="15dp"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_fork"
+                app:drawableLeftHeight="10dp"
+                app:drawableLeftWidth="10dp"
+                android:drawablePadding="1dp"
+                android:drawableTint="?android:textColorSecondary"
+                android:textColor="?android:textColorSecondary"
+                android:text="500"
+                android:textSize="12sp"
+                />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/owner_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="?themeColor1"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/repo_avatar"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/logo"
+                />
+
+            <TextView
+                android:id="@+id/repo_owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/repo_avatar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="10dp"
+                android:textSize="12sp"
+                android:text="NOSAE"
+                android:textColor="?android:textColorSecondary"
+                />
+
+            <ImageView
+                android:id="@+id/repo_more"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_more_vert"
+                android:tint="?android:textColorSecondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:padding="5dp"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

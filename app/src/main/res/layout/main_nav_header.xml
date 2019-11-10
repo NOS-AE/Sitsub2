@@ -5,21 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/nav_header_height"
-    android:background="?colorPrimary"
+    android:background="@color/githubColor"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_margin"
     android:paddingLeft="@dimen/activity_margin"
-    android:paddingRight="@dimen/activity_margin"
     android:paddingTop="@dimen/activity_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    >
 
-    <org.fmod.finaltest.widget.RoundedImage
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="@dimen/spacing_x_large"
-        android:src="@drawable/ic_github"
+        android:src="@drawable/logo"
         />
 
     <LinearLayout
@@ -37,15 +36,19 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="OpenHub"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+                android:text="Sitsub2"
+                android:textColor="@color/lightWhite"
+                android:textSize="14sp"
+                />
 
             <TextView
-                android:id="@+id/mail"
+                android:id="@+id/bio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="An android client for GitHub."
-                android:lines="1"/>
+                android:text="An Android client for GitHub"
+                android:textColor="@color/hint"
+                android:textSize="14sp"
+                />
         </LinearLayout>
 
         <ImageView
@@ -53,12 +56,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_tri_arrow"
-            android:tint="@color/black"
-            android:padding="@dimen/spacing_normal"
-            android:background="?android:selectableItemBackgroundBorderless"
+            android:tint="@color/lightWhite"
+            android:padding="12dp"
             android:layout_marginTop="-12dp"
             android:layout_marginBottom="-12dp"
-            android:layout_marginEnd="-20dp"
+            android:background="?android:selectableItemBackgroundBorderless"
             />
 
     </LinearLayout>

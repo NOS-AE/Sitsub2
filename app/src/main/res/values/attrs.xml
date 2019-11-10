@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- usually colorPrimary -->
-    <attr name="themeColor1" format="color|reference"/>
-    <!-- usually colorPrimaryDark -->
-    <attr name="themeColor2" format="color|reference"/>
-    <!-- usually colorAccent -->
-    <attr name="themeColor3" format="color|reference"/>
-    <!-- usually windowBackground -->
-    <attr name="themeColor4" format="color|reference"/>
+    <!-- 底层背景 -->
+    <attr name="themeColor1" format="color|reference" />
+    <!-- 背景 -->
+    <attr name="themeColor2" format="color|reference" />
+    <!-- Accent -->
+    <attr name="themeColor3" format="color|reference" />
+    <!-- 字体或其他与背景相反的颜色 -->
+    <attr name="themeColor4" format="color|reference" />
 
-    <attr name="cardBg" format="color|reference"/>
-    <attr name="activeColor" format="color|reference"/>
-    <attr name="textGrey" format="color|reference"/>
+    <attr name="textGrey" format="color|reference" />
+    <attr name="colorIndicator" format="color|reference" />
+
+    <declare-styleable name="ScaleTab">
+        <attr name="textColorSelected" format="color|reference" />
+        <attr name="textColorNormal" format="color|reference" />
+        <attr name="textSizeNormal" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="MyTextView">
+        <attr name="prefix" format="string|reference"/>
+        <attr name="drawableLeftWidth" format="dimension|reference"/>
+        <attr name="drawableRightWidth" format="dimension|reference"/>
+        <attr name="drawableTopWidth" format="dimension|reference"/>
+        <attr name="drawableBottomWidth" format="dimension|reference"/>
+        <attr name="drawableLeftHeight" format="dimension|reference"/>
+        <attr name="drawableRightHeight" format="dimension|reference"/>
+        <attr name="drawableTopHeight" format="dimension|reference"/>
+        <attr name="drawableBottomHeight" format="dimension|reference"/>
+    </declare-styleable>
 
 </resources>

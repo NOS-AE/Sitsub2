@@ -1,15 +1,12 @@
 package org.fmod.sitsub2.base
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import org.fmod.sitsub2.util.errorLog
-import java.lang.Exception
-import java.lang.reflect.Constructor
-import java.lang.reflect.Modifier
-import java.lang.reflect.ParameterizedType
+import kotlinx.android.extensions.LayoutContainer
+import org.fmod.sitsub2.util.inflate
+import org.fmod.sitsub2.util.log
 import kotlin.properties.Delegates
 
 
@@ -21,10 +18,12 @@ private const val TYPE_ITEM = 2
  *
  * @param mList 展示的列表
  */
-abstract class BaseAdapter<T: BaseAdapter.BaseViewHolder, U>(var mList: List<U>): RecyclerView.Adapter<BaseAdapter.BaseViewHolder>() {
+abstract class BaseAdapter<U>(protected var mList: List<U>): RecyclerView.Adapter<BaseAdapter<U>.ViewHolder>() {
 
-    var mOnItemClickListener: ((pos:Int) -> Unit)? = null
-    var mOnItemLongClickListener: ((pos:Int) -> Boolean)? = null
+    /*var mOnItemClickListener: ((pos: Int, item: U) -> Unit)? = null
+    var mOnItemLongClickListener: ((pos: Int, item: U) -> Boolean)? = null*/
+
+    var onSetListener: ((holder: ViewHolder) -> Unit) = { }
     var mOnHeaderClickListener: (()->Unit)? = null
     var mOnFooterClickListener: (()->Unit)? = null
 
@@ -68,99 +67,70 @@ abstract class BaseAdapter<T: BaseAdapter.BaseViewHolder, U>(var mList: List<U>)
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when(viewType) {
             TYPE_HEADER -> {
                 headerView?.setOnClickListener {
                     mOnHeaderClickListener?.invoke()
                 }
-                return BaseViewHolder(headerView as View)
+                return ViewHolder(headerView as View)
             }
             TYPE_FOOTER -> {
                 footerView?.setOnClickListener {
                     mOnFooterClickListener?.invoke()
                 }
-                return BaseViewHolder(footerView as View)
+                return ViewHolder(footerView as View)
             }
             else -> {
-                val res = createViewHolder(LayoutInflater.from(parent.context).inflate(getLayoutId(), parent, false))
-                val pos = if(headerView != null)
-                    res.adapterPosition - 1
-                else
-                    res.adapterPosition
-                setOnListenerOnCreate(res as T, pos, mList[pos])
-                res.itemView.setOnClickListener {
-                    mOnItemClickListener?.invoke(pos)
+                val res = ViewHolder(parent.inflate(getLayoutId()))
+                onCreateViewHolder(res)
+                onSetListener(res)
+                /*res.itemView.setOnClickListener {
+                    mOnItemClickListener?.invoke(pos, mList[pos])
                 }
                 res.itemView.setOnLongClickListener {
-                    mOnItemLongClickListener?.invoke(pos) ?: false
-                }
+                    mOnItemLongClickListener?.invoke(pos, mList[pos]) ?: false
+                }*/
                 res
             }
         }
     }
 
-    /**
-     * 使用反射获取BaseViewHolder子类实例
-     */
-    @Suppress("UNCHECKED_CAST")
-    private fun createViewHolder(itemView: View): BaseViewHolder {
-        val type = javaClass.genericSuperclass//获取父类Type
-        if(type is ParameterizedType) {
-            val classViewHolder = type.actualTypeArguments[0] as Class<*>
-            try {
-                val cons: Constructor<*> =
-                    if(classViewHolder.isMemberClass && !Modifier.isStatic(classViewHolder.modifiers)) {//内部且非静态类
-                        //获取内部类构造函数必须通过外部类
-                        classViewHolder.getDeclaredConstructor(javaClass, View::class.java)
-                    } else {
-                        classViewHolder.getDeclaredConstructor(View::class.java)
-                    }
-                cons.isAccessible = true
-                return cons.newInstance(this, itemView) as BaseViewHolder
-            } catch (e: Exception) {
-                errorLog(e)
-            }
-        }
-        return BaseViewHolder(itemView)
-    }
+
 
     @Suppress("UNCHECKED_CAST")
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when(holder.itemViewType) {
             TYPE_ITEM -> {
                 val pos = if(headerView != null)
                     position - 1
                 else
                     position
-                onBindViewHolder(holder as T, pos, mList[pos])
+                onBindViewHolder(holder, pos, mList[pos])
             }
             TYPE_HEADER -> {
-                onBindHeader(holder as T)
+                onBindHeader(holder)
             }
             TYPE_FOOTER -> {
-                onBindFooter(holder as T)
+                onBindFooter(holder)
             }
         }
     }
 
-    protected abstract fun onBindViewHolder(holder: T, position: Int, value: U)
+    protected open fun onCreateViewHolder(holder: ViewHolder) {}
 
-    protected open fun onBindHeader(holder: T) {}
+    protected abstract fun onBindViewHolder(holder: ViewHolder, position: Int, value: U)
 
-    protected open fun onBindFooter(holder: T) {}
+    protected open fun onBindHeader(holder: ViewHolder) {}
 
-    protected open fun setOnListenerOnCreate(holder: T, position: Int, value: U) {}
+    protected open fun onBindFooter(holder: ViewHolder) {}
 
-    /**
-     * 继承此ViewHolder目的是绑定itemView到子类属性上
-     * 在大量onBind中使用kotlin安卓控件的extension会影响一定的性能
-     *
-     * header和footer数量只有一个，刷新对性能影响不大，直接使用BaseViewHolder
-     *
-     * 对于itemView，使用反射获取子类实例
-     */
-
-    open class BaseViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), LayoutContainer {
+        override val containerView: View? = itemView
+        fun getPos(): Int = if (headerView != null)
+                adapterPosition - 1
+            else
+                adapterPosition
+    }
 
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="dark1">#26282C</color>
+    <color name="dark2">#2D3035</color>
+    <color name="dark3">#ff8ba0</color>
+    <color name="dark4">#fafafa</color>
+    <color name="dark5">#e3e3e3</color>
+
+    <style name="ThemeDark" parent="BaseTheme">
+        <item name="themeColor1">@color/dark1</item>
+        <item name="themeColor2">@color/dark2</item>
+        <item name="themeColor3">@color/dark3</item>
+        <item name="themeColor4">@color/dark4</item>
+        <item name="android:textColorSecondary">#9E9E9E</item>
+        <item name="colorIndicator">@color/hint</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+
+</resources>

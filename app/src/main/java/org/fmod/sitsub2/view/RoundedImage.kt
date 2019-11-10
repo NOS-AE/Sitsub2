@@ -1,4 +1,4 @@
-package org.fmod.finaltest.widget
+package org.fmod.sitsub2.view
 
 import android.content.Context
 import android.graphics.*

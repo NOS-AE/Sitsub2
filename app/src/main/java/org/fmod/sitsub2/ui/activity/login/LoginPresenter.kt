@@ -1,4 +1,4 @@
-package org.fmod.sitsub2.ui.face.login
+package org.fmod.sitsub2.ui.activity.login
 
 import android.net.Uri
 import org.fmod.sitsub2.AppData
@@ -83,28 +83,24 @@ class LoginPresenter: BasePresenter<LoginContract.View>(), LoginContract.Present
         })
     }
 
-    private fun saveAuthUser(basicResponse: BasicResponse, user: User) {
-        launch({
-            DataManager.authUserDao.updateToUnselected()
-            DataManager.authUserDao.deleteByLoginId(user.login)
+    private suspend fun saveAuthUser(basicResponse: BasicResponse, user: User) {
+        DataManager.authUserDao.updateToUnselected()
+        DataManager.authUserDao.deleteByLoginId(user.login)
 
-            val authUser = AuthUser(
-                basicResponse.accessToken,
-                Date(),
-                360 * 24 * 60 * 60,
-                basicResponse.scopes.toString(","),
-                true,
-                user.login,
-                user.name,
-                user.avatarUrl
-            )
+        val authUser = AuthUser(
+            basicResponse.accessToken,
+            Date(),
+            360 * 24 * 60 * 60,
+            basicResponse.scopes.toString(","),
+            true,
+            user.login,
+            user.name,
+            user.avatarUrl
+        )
 
-            DataManager.authUserDao.insertReplace(authUser)
-            AppData.authUser = authUser
-            AppData.loggedUser = user
-        }, {
-            localErrorLog(it)
-        })
+        DataManager.authUserDao.insertReplace(authUser)
+        AppData.authUser = authUser
+        AppData.loggedUser = user
     }
 
     //保存basicLogin的用户名

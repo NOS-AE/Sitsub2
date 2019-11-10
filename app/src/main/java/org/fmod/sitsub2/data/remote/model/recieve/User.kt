@@ -1,6 +1,5 @@
 package org.fmod.sitsub2.data.remote.model.recieve
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
@@ -8,13 +7,25 @@ import java.util.*
 
 @Parcelize
 data class User(
+
     var login: String,
     var id: Long = 24354872,
-    //@SerializedName("node_id") lateinit var nodeId: String = "MDQ6VXNlcjI0MzU0ODcy"
+    var name: String = "Yu Tang",
     @SerializedName("avatar_url") var avatarUrl: String = "https://avatars0.githubusercontent.com/u/24354872?v=4",
-    //@SerializedName("gravatar_id") var grAvatarId: String = ""
-    //var url: String = "https://api.github.com/users/NOS-AE"
     @SerializedName("html_url") var htmlUrl: String = "https://github.com/NOS-AE",
+    var type: UserType = UserType.User,
+    var company: String = "",
+    var blog: String = "",
+    var location: String = "",
+    var email: String = "",
+    var bio: String = "",
+
+    @SerializedName("public_repos") var publicRepos: Int = 0,
+    @SerializedName("public_gists") var publicGists: Int = 0,
+    var followers: Int = 0,
+    var following: Int = 0,
+    @SerializedName("created_at") var createdAt: Date,
+    @SerializedName("updated_at") var updatedAt: Date
     //@SerializedName("followers_url") var followersUrl: String = "https://api.github.com/users/NOS-AE/followers"
     //@SerializedName("following_url") var followingUrl: String = "https://api.github.com/users/NOS-AE/following{/other_user}"
     //@SerializedName("gists_url") var gistsUrl: String = "https://api.github.com/users/NOS-AE/gists{/gist_id}"
@@ -24,22 +35,12 @@ data class User(
     //@SerializedName("repos_url") var reposUrl: String = "https://api.github.com/users/NOS-AE/repos"
     //@SerializedName("events_url") var eventsUrl: String = "https://api.github.com/users/NOS-AE/events{/privacy}"
     //@SerializedName("received_events_url") var receivedEventsUrl: String = "https://api.github.com/users/NOS-AE/received_events"
-    var type: UserType = UserType.User,
     //@SerializedName("site_admin") var siteAdmin = false
-    var name: String = "Yu Tang",
-    var company: String = "",
-    var blog: String = "",
-    var location: String = "",
-    var email: String = "",
-    var hireable: Boolean = false,
-    var bio: String = "",
+    //var hireable: Boolean = false,
+    //@SerializedName("gravatar_id") var grAvatarId: String = ""
+    //var url: String = "https://api.github.com/users/NOS-AE"
+    //@SerializedName("node_id") lateinit var nodeId: String = "MDQ6VXNlcjI0MzU0ODcy"
 
-    @SerializedName("public_repos") var publicRepos: Int = 0,
-    @SerializedName("public_gists") var publicGists: Int = 0,
-    var followers: Int = 0,
-    var following: Int = 0,
-    @SerializedName("created_at") var createdAt: Date,
-    @SerializedName("updated_at") var updatedAt: Date
 ): Parcelable {
 
     enum class UserType{

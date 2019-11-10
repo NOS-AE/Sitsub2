@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="20dp"
+    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/hint"
+        android:text="类型"
+        />
+
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/filter_toolbar"
+        app:singleSelection="true"
+        app:checkedChip="@id/one"
+        app:chipSpacing="20dp"
+        >
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/one"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            app:chipStrokeColor="@color/lightHint"
+            app:chipStrokeWidth="1dp"
+            app:chipBackgroundColor="@color/lightHint"
+            app:chipSurfaceColor="?colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择1"
+            />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/two"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择asd3"
+            />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/three"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择3"
+            />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/four"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选asd择3"
+            />
+
+    </com.google.android.material.chip.ChipGroup>
+
+</LinearLayout>

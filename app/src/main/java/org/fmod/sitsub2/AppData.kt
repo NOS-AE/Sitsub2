@@ -5,5 +5,5 @@ import org.fmod.sitsub2.data.remote.model.recieve.User
 
 object AppData {
     lateinit var authUser: AuthUser
-    lateinit var loggedUser: User
+    var loggedUser: User? = null
 }
